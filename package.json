@@ -25,7 +25,8 @@
     "lint": "eslint .",
     "build-dep": "yarn && yarn build",
     "link-core": "yalc link @tensorflow/tfjs-core",
-    "link-webgl": "yalc link @tensorflow/tfjs-backend-webgl"
+    "link-webgl": "yalc link @tensorflow/tfjs-backend-webgl",
+    "publish": "push-dir --dir=dist --branch=gh-pages --cleanup --verbose"
   },
   "browser": {
     "crypto": false

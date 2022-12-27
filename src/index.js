@@ -29,17 +29,9 @@ import { setupDatGui } from './option_panel';
 import { STATE, createDetector } from './shared/params';
 import { setBackendAndEnvFlags } from './shared/util';
 
-let detector, camera, stats;
-let startInferenceTime, numInferences = 0;
-let inferenceTimeSum = 0, lastPanelUpdate = 0;
+let detector, camera;
 let rafId;
 
-const COLOUR_MAP = {
-    'red': "rgba(168, 0, 34, 0.35)",
-    'green': "rgba(0, 168, 34, 0.35)",
-    'blue': "rgba(0, 34, 168, 0.35)",
-    'yellow': "rgba(168, 168, 34, 0.35)"
-};
 
 async function checkGuiUpdate() {
     if (STATE.isTargetFPSChanged || STATE.isSizeOptionChanged) {
@@ -71,26 +63,6 @@ async function checkGuiUpdate() {
         STATE.isFlagChanged = false;
         STATE.isBackendChanged = false;
         STATE.isModelChanged = false;
-    }
-}
-
-function beginEstimateFaceStats() {
-    startInferenceTime = (performance || Date).now();
-}
-
-function endEstimateFaceStats() {
-    const endInferenceTime = (performance || Date).now();
-    inferenceTimeSum += endInferenceTime - startInferenceTime;
-    ++numInferences;
-
-    const panelUpdateMilliseconds = 1000;
-    if (endInferenceTime - lastPanelUpdate >= panelUpdateMilliseconds) {
-        const averageInferenceTime = inferenceTimeSum / numInferences;
-        inferenceTimeSum = 0;
-        numInferences = 0;
-        stats.customFpsPanel.update(
-            1000.0 / averageInferenceTime, 120 /* maxValue */);
-        lastPanelUpdate = endInferenceTime;
     }
 }
 
@@ -131,7 +103,7 @@ async function renderResult() {
     // different model. If during model change, the result is from an old model,
     // which shouldn't be rendered.
     if (faces && faces.length > 0 && !STATE.isColouredChanged) {
-        camera.drawResults(faces, COLOUR_MAP[STATE.colour]);
+        camera.drawResults(faces, STATE.colour);
     }
 }
 

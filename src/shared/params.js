@@ -16,7 +16,6 @@
  */
 import * as faceMesh from '@mediapipe/face_mesh';
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
-import { Color } from 'three';
 
 export const NUM_KEYPOINTS = 468;
 export const NUM_IRIS_KEYPOINTS = 5;
@@ -52,6 +51,14 @@ export const LABEL_TO_COLOR = {
     rightIris: '#FF3030',
     faceOval: '#E0E0E0',
 };
+
+export const COLOUR_MAP = {
+    'red': "rgba(168, 0, 34, 0.35)",
+    'green': "rgba(0, 168, 34, 0.35)",
+    'blue': "rgba(0, 34, 168, 0.35)",
+    'yellow': "rgba(168, 168, 34, 0.35)"
+};
+
 export async function createDetector() {
     switch (STATE.model) {
         case faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh:

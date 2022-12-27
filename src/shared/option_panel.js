@@ -45,12 +45,12 @@ export async function setupModelFolder(gui, urlParams) {
 }
 
 async function showAppearanceConfigs(folderController) {
-    const colours = ['red', 'green', 'blue', 'yellow'];
+    const colours = Object.keys(params.COLOUR_MAP);
     const colourController = folderController.add(params.STATE, 'colour', colours);
-    params.STATE.colour = colours[0];
+    params.STATE.colour = params.COLOUR_MAP[colours[0]];
     colourController.onChange(colour => {
         params.STATE.isColourChanged = true;
-        params.STATE.colour = colour;
+        params.STATE.colour = params.COLOUR_MAP[colour];
     });
 }
 
