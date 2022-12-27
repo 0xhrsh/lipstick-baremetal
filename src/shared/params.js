@@ -16,6 +16,7 @@
  */
 import * as faceMesh from '@mediapipe/face_mesh';
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
+import { Color } from 'three';
 
 export const NUM_KEYPOINTS = 468;
 export const NUM_IRIS_KEYPOINTS = 5;
@@ -32,7 +33,8 @@ export const STATE = {
     camera: { targetFPS: 60, sizeOption: '640 X 480' },
     backend: '',
     flags: {},
-    modelConfig: {}
+    modelConfig: {},
+    colour: ''
 };
 export const MEDIAPIPE_FACE_CONFIG = {
     maxFaces: 1,

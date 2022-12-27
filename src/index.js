@@ -34,6 +34,13 @@ let startInferenceTime, numInferences = 0;
 let inferenceTimeSum = 0, lastPanelUpdate = 0;
 let rafId;
 
+const COLOUR_MAP = {
+    'red': "rgba(168, 0, 34, 0.35)",
+    'green': "rgba(0, 168, 34, 0.35)",
+    'blue': "rgba(0, 34, 168, 0.35)",
+    'yellow': "rgba(168, 168, 34, 0.35)"
+};
+
 async function checkGuiUpdate() {
     if (STATE.isTargetFPSChanged || STATE.isSizeOptionChanged) {
         camera = await Camera.setupCamera(STATE.camera);
@@ -102,7 +109,7 @@ async function renderResult() {
     // from a URL that does not exist).
     if (detector != null) {
         // FPS only counts the time it takes to finish estimateFaces.
-        beginEstimateFaceStats();
+
 
         // Detectors can throw errors, for example when using custom URLs that
         // contain a model that doesn't provide the expected output.
@@ -115,7 +122,7 @@ async function renderResult() {
             alert(error);
         }
 
-        endEstimateFaceStats();
+
     }
 
     camera.drawCtx();
@@ -123,11 +130,8 @@ async function renderResult() {
     // The null check makes sure the UI is not in the middle of changing to a
     // different model. If during model change, the result is from an old model,
     // which shouldn't be rendered.
-    if (faces && faces.length > 0 && !STATE.isModelChanged) {
-        camera.drawResults(faces, "rgba(168, 0, 34, 0.35)");
-        // camera.drawResults(
-        //     faces2, STATE.modelConfig.triangulateMesh,
-        //     STATE.modelConfig.boundingBox);
+    if (faces && faces.length > 0 && !STATE.isColouredChanged) {
+        camera.drawResults(faces, COLOUR_MAP[STATE.colour]);
     }
 }
 
