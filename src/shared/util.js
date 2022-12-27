@@ -16,10 +16,9 @@
  */
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
 import * as tf from '@tensorflow/tfjs-core';
-import { count } from 'console';
+
 
 import { GREEN, BLUE, LABEL_TO_COLOR, NUM_IRIS_KEYPOINTS, NUM_KEYPOINTS, RED, TUNABLE_FLAG_VALUE_RANGE_MAP } from './params';
-import { TRIANGULATION } from './triangulation';
 
 export function isiOS() {
     return /iPhone|iPad|iPod/i.test(navigator.userAgent);

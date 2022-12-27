@@ -27,7 +27,6 @@ import '@tensorflow-models/face-detection';
 import { Camera } from './camera';
 import { setupDatGui } from './option_panel';
 import { STATE, createDetector } from './shared/params';
-import { setupStats } from './shared/stats_panel';
 import { setBackendAndEnvFlags } from './shared/util';
 
 let detector, camera, stats;
@@ -159,8 +158,6 @@ async function app() {
     const urlParams = new URLSearchParams(window.location.search);
 
     await setupDatGui(urlParams);
-
-    stats = setupStats();
 
     camera = await Camera.setupCamera(STATE.camera);
 
