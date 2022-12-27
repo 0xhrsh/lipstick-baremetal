@@ -26,7 +26,7 @@
     "build-dep": "yarn && yarn build",
     "link-core": "yalc link @tensorflow/tfjs-core",
     "link-webgl": "yalc link @tensorflow/tfjs-backend-webgl",
-    "publish": "push-dir --dir=dist --branch=gh-pages --cleanup --verbose"
+    "deploy": "push-dir --dir=dist --branch=deploy --cleanup --verbose"
   },
   "browser": {
     "crypto": false
