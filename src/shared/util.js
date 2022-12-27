@@ -131,11 +131,11 @@ const lowerLipPath = [61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291, 292, 30
 
 
 
-export function drawResults(ctx, faces, triangulateMesh, boundingBox) {
+export function drawResults(ctx, faces, colour) {
     for (let fi = 0; fi < faces.length; fi++) {
         const face = faces[fi];
 
-        ctx.fillStyle = "rgba(168, 0, 34, 0.35)";
+        ctx.fillStyle = colour;
 
         const keypoints = face.keypoints.map((keypoint) => [keypoint.x, keypoint.y]);
 

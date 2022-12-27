@@ -120,23 +120,11 @@ async function renderResult() {
 
     camera.drawCtx();
 
-    // let faces2 = Object.assign([], faces);
-    // for (let i = 0; i < faces.length; i++) {
-    //     var kp = []
-    //     for (let j = 0; j < faces[i].keypoints.length; j++) {
-    //         if (faces[i].keypoints[j]['name'] == 'lips') {
-    //             kp.push(faces[i].keypoints[j])
-    //         }
-    //     }
-    //     faces2[i].keypoints = kp
-    // }
-
-
     // The null check makes sure the UI is not in the middle of changing to a
     // different model. If during model change, the result is from an old model,
     // which shouldn't be rendered.
     if (faces && faces.length > 0 && !STATE.isModelChanged) {
-        camera.drawResults(faces, false, false);
+        camera.drawResults(faces, "rgba(168, 0, 34, 0.35)");
         // camera.drawResults(
         //     faces2, STATE.modelConfig.triangulateMesh,
         //     STATE.modelConfig.boundingBox);
