@@ -29,11 +29,36 @@ let TUNABLE_FLAG_DEFAULT_VALUE_MAP;
 const stringValueMap = {};
 
 export async function setupModelFolder(gui, urlParams) {
-    params.STATE.model = faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
+    // The model folder contains options for model selection.
+    const modelFolder = gui.addFolder('Model');
 
-    const appearanceFolder = gui.addFolder('Appearance');
-    showAppearanceConfigs(appearanceFolder);
-    appearanceFolder.open();
+    const model = urlParams.get('model');
+
+    switch (model) {
+        case 'mediapipe_face_mesh':
+            params.STATE.model =
+                faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
+            break;
+        default:
+            const url = new URL(window.location.href);
+            url.searchParams.set('model', 'mediapipe_face_mesh');
+            window.location.href = url;
+            break;
+    }
+
+    const modelController = modelFolder.add(
+        params.STATE, 'model',
+        Object.values(faceLandmarksDetection.SupportedModels));
+
+    modelController.onChange(_ => {
+        params.STATE.isModelChanged = true;
+        showModelConfigs(modelFolder);
+        showBackendConfigs(backendFolder);
+    });
+
+    showModelConfigs(modelFolder);
+
+    modelFolder.open();
 
     const backendFolder = gui.addFolder('Backend');
 
@@ -42,16 +67,6 @@ export async function setupModelFolder(gui, urlParams) {
     backendFolder.open();
 
     return gui;
-}
-
-async function showAppearanceConfigs(folderController) {
-    const colours = Object.keys(params.COLOUR_MAP);
-    const colourController = folderController.add(params.STATE, 'colour', colours);
-    params.STATE.colour = params.COLOUR_MAP[colours[0]];
-    colourController.onChange(colour => {
-        params.STATE.isColourChanged = true;
-        params.STATE.colour = params.COLOUR_MAP[colour];
-    });
 }
 
 async function showBackendConfigs(folderController) {

@@ -20,7 +20,7 @@ import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detec
 export const NUM_KEYPOINTS = 468;
 export const NUM_IRIS_KEYPOINTS = 5;
 export const GREEN = '#32EEDB';
-export const RED = '#a80022';
+export const RED = '#FF2C35';
 export const BLUE = '#157AB3';
 
 export const VIDEO_SIZE = {
@@ -32,8 +32,7 @@ export const STATE = {
     camera: { targetFPS: 60, sizeOption: '640 X 480' },
     backend: '',
     flags: {},
-    modelConfig: {},
-    colour: ''
+    modelConfig: {}
 };
 export const MEDIAPIPE_FACE_CONFIG = {
     maxFaces: 1,
@@ -51,14 +50,6 @@ export const LABEL_TO_COLOR = {
     rightIris: '#FF3030',
     faceOval: '#E0E0E0',
 };
-
-export const COLOUR_MAP = {
-    'red': "rgba(168, 0, 34, 0.35)",
-    'green': "rgba(0, 168, 34, 0.35)",
-    'blue': "rgba(0, 34, 168, 0.35)",
-    'yellow': "rgba(168, 168, 34, 0.35)"
-};
-
 export async function createDetector() {
     switch (STATE.model) {
         case faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh:

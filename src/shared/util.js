@@ -17,8 +17,7 @@
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
 import * as tf from '@tensorflow/tfjs-core';
 
-
-import { GREEN, BLUE, LABEL_TO_COLOR, NUM_IRIS_KEYPOINTS, NUM_KEYPOINTS, RED, TUNABLE_FLAG_VALUE_RANGE_MAP } from './params';
+import { TUNABLE_FLAG_VALUE_RANGE_MAP } from './params';
 
 export function isiOS() {
     return /iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -118,6 +117,11 @@ function drawPath(ctx, points, closePath) {
     ctx.stroke(region);
 }
 
+function darkenRGBPercentage(rgb, percentage) {
+    const [r, g, b] = rgb;
+    return [r * (1 - percentage), g * (1 - percentage), b * (1 - percentage)];
+}
+
 /**
  * Draw the keypoints on the video.
  * @param ctx 2D rendering context.
@@ -125,20 +129,23 @@ function drawPath(ctx, points, closePath) {
  * @param triangulateMesh Whether or not to display the triangle mesh.
  * @param boundingBox Whether or not to display the bounding box.
  */
+export function drawResults(ctx, faces, triangulateMesh, boundingBox) {
+    var rgb = [170, 0, 52]
+    const [r, g, b] = darkenRGBPercentage(rgb, 0)
+    drawLipstick(ctx, faces, `rgba(${r}, ${g}, ${b}, 0.25)`);
+}
 
-const upperLipPath = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 292, 415, 310, 311, 312, 13, 82, 81, 80, 191, 78, 62, 76, 61];
-const lowerLipPath = [61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291, 292, 308, 324, 318, 402, 317, 14, 87, 178, 88, 95, 78, 62, 76, 61];
+const upperLipPath = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 306, 292, 308, 415, 310, 311, 312, 13, 82, 81, 80, 191, 78, 62, 76, 61];
+const lowerLipPath = [61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291, 306, 292, 308, 324, 318, 402, 317, 14, 87, 178, 88, 95, 78, 62, 76, 61];
 
 
-
-export function drawResults(ctx, faces, colour) {
+export function drawLipstick(ctx, faces, colour) {
     for (let fi = 0; fi < faces.length; fi++) {
         const face = faces[fi];
 
         ctx.fillStyle = colour;
 
         const keypoints = face.keypoints.map((keypoint) => [keypoint.x, keypoint.y]);
-
         ctx.beginPath();
         var index = upperLipPath[0];
         ctx.moveTo(keypoints[index][0], keypoints[index][1]);
@@ -155,6 +162,7 @@ export function drawResults(ctx, faces, colour) {
             index = lowerLipPath[i];
             ctx.lineTo(keypoints[index][0], keypoints[index][1]);
         }
+        ctx.filter = 'blur(1px)';
         ctx.fill();
     }
 }

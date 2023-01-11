@@ -32,7 +32,6 @@ import { setBackendAndEnvFlags } from './shared/util';
 let detector, camera;
 let rafId;
 
-
 async function checkGuiUpdate() {
     if (STATE.isTargetFPSChanged || STATE.isSizeOptionChanged) {
         camera = await Camera.setupCamera(STATE.camera);
@@ -102,8 +101,10 @@ async function renderResult() {
     // The null check makes sure the UI is not in the middle of changing to a
     // different model. If during model change, the result is from an old model,
     // which shouldn't be rendered.
-    if (faces && faces.length > 0 && !STATE.isColouredChanged) {
-        camera.drawResults(faces, STATE.colour);
+    if (faces && faces.length > 0 && !STATE.isModelChanged) {
+        camera.drawResults(
+            faces, STATE.modelConfig.triangulateMesh,
+            STATE.modelConfig.boundingBox);
     }
 }
 
