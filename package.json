@@ -23,10 +23,7 @@
     "watch": "cross-env NODE_ENV=development parcel index.html --no-hmr --open",
     "build": "cross-env NODE_ENV=production parcel build index.html --public-url ./",
     "lint": "eslint .",
-    "build-dep": "yarn && yarn build",
-    "link-core": "yalc link @tensorflow/tfjs-core",
-    "link-webgl": "yalc link @tensorflow/tfjs-backend-webgl",
-    "deploy": "push-dir --dir=dist --branch=deploy --cleanup --verbose"
+    "deploy": "rm -rf dist/* && yarn build && push-dir --dir=dist --branch=deploy --cleanup --verbose"
   },
   "browser": {
     "crypto": false
