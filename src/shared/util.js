@@ -16,6 +16,7 @@
  */
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
 import * as tf from '@tensorflow/tfjs-core';
+import * as params from './params';
 
 import { TUNABLE_FLAG_VALUE_RANGE_MAP } from './params';
 
@@ -130,7 +131,7 @@ function darkenRGBPercentage(rgb, percentage) {
  * @param boundingBox Whether or not to display the bounding box.
  */
 export function drawResults(ctx, faces, triangulateMesh, boundingBox) {
-    var rgb = [170, 0, 52]
+    var rgb = params.LIPSTICK_COLORS[params.STATE.color];
     const [r, g, b] = darkenRGBPercentage(rgb, 0)
     drawLipstick(ctx, faces, `rgba(${r}, ${g}, ${b}, 0.25)`);
 }

@@ -15,11 +15,25 @@
  * =============================================================================
  */
 import * as params from './shared/params';
-import { setupModelFolder } from './shared/option_panel';
 
 export async function setupDatGui() {
     const gui = new dat.GUI({ width: 300 });
     gui.domElement.id = 'gui';
 
-    return setupModelFolder(gui);
+    const lipstick = gui.addFolder('Lipstick');
+
+    const fixedSelectionCount = 0;
+    while (lipstick.__controllers.length > fixedSelectionCount) {
+        lipstick.remove(
+            lipstick
+                .__controllers[lipstick.__controllers.length - 1]);
+    }
+    const colors = Object.keys(params.LIPSTICK_COLORS);
+    params.STATE.color = colors[0];
+    const colorController =
+        lipstick.add(params.STATE, 'color', colors);
+    colorController.name('Color');
+    lipstick.open();
+
+    return;
 }

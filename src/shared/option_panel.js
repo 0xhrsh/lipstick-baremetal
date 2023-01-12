@@ -15,11 +15,8 @@
  * =============================================================================
  */
 
-import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
 import * as tf from '@tensorflow/tfjs-core';
-
 import * as params from './params';
-import * as CONST from '../const';
 
 /**
  * Records each flag's default value under the runtime environment and is a
@@ -29,36 +26,6 @@ let TUNABLE_FLAG_DEFAULT_VALUE_MAP;
 
 const stringValueMap = {};
 
-export async function setupModelFolder(gui) {
-    const backendFolder = gui.addFolder('Backend');
-
-    showBackendConfigs(backendFolder);
-
-    backendFolder.open();
-
-    return gui;
-}
-
-async function showBackendConfigs(folderController) {
-    // Clean up backend configs for the previous model.
-    const fixedSelectionCount = 0;
-    while (folderController.__controllers.length > fixedSelectionCount) {
-        folderController.remove(
-            folderController
-                .__controllers[folderController.__controllers.length - 1]);
-    }
-    const backends = params.MODEL_BACKEND_MAP[CONST.MODEL];
-    // The first element of the array is the default backend for the model.
-    params.STATE.backend = backends[0];
-    const backendController =
-        folderController.add(params.STATE, 'backend', backends);
-    backendController.name('runtime-backend');
-    backendController.onChange(async backend => {
-        params.STATE.isBackendChanged = true;
-        await showFlagSettings(folderController, backend);
-    });
-    await showFlagSettings(folderController, params.STATE.backend);
-}
 
 /**
  * Query all tunable flags' default value and populate `STATE.flags` with them.

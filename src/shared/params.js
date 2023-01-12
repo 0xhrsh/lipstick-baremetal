@@ -33,8 +33,15 @@ export const STATE = {
     camera: { targetFPS: 60, sizeOption: '640 X 480' },
     backend: '',
     flags: {},
-    modelConfig: {}
+    modelConfig: {},
+    color: ''
 };
+
+export const LIPSTICK_COLORS = {
+    'Sinful Cherry': [170, 0, 52],
+    'Delicious Plum': [127, 2, 75]
+}
+
 export const MEDIAPIPE_FACE_CONFIG = {
     maxFaces: 1,
     triangulateMesh: true,
