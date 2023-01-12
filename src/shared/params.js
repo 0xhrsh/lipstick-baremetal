@@ -16,6 +16,7 @@
  */
 import * as faceMesh from '@mediapipe/face_mesh';
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
+import * as CONST from '../const';
 
 export const NUM_KEYPOINTS = 468;
 export const NUM_IRIS_KEYPOINTS = 5;
@@ -50,21 +51,21 @@ export const LABEL_TO_COLOR = {
     faceOval: '#E0E0E0',
 };
 export async function createDetector() {
-    switch (STATE.model) {
+    switch (CONST.MODEL) {
         case faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh:
-            const runtime = STATE.backend.split('-')[0];
+            const runtime = CONST.BACKEND.split('-')[0];
             if (runtime === 'mediapipe') {
-                return faceLandmarksDetection.createDetector(STATE.model, {
+                return faceLandmarksDetection.createDetector(CONST.MODEL, {
                     runtime,
                     refineLandmarks: true,
-                    maxFaces: STATE.modelConfig.maxFaces,
+                    maxFaces: CONST.MAX_FACES,
                     solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@${faceMesh.VERSION}`
                 });
             } else if (runtime === 'tfjs') {
-                return faceLandmarksDetection.createDetector(STATE.model, {
+                return faceLandmarksDetection.createDetector(CONST.MODEL, {
                     runtime,
                     refineLandmarks: true,
-                    maxFaces: STATE.modelConfig.maxFaces,
+                    maxFaces: CONST.MAX_FACES,
                 });
             }
     }

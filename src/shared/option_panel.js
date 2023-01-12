@@ -19,6 +19,7 @@ import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detec
 import * as tf from '@tensorflow/tfjs-core';
 
 import * as params from './params';
+import * as CONST from '../const';
 
 /**
  * Records each flag's default value under the runtime environment and is a
@@ -29,25 +30,6 @@ let TUNABLE_FLAG_DEFAULT_VALUE_MAP;
 const stringValueMap = {};
 
 export async function setupModelFolder(gui) {
-    // The model folder contains options for model selection.
-    const modelFolder = gui.addFolder('Model');
-
-    params.STATE.model = faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
-
-    const modelController = modelFolder.add(
-        params.STATE, 'model',
-        Object.values(faceLandmarksDetection.SupportedModels));
-
-    modelController.onChange(_ => {
-        params.STATE.isModelChanged = true;
-        showModelConfigs(modelFolder);
-        showBackendConfigs(backendFolder);
-    });
-
-    showModelConfigs(modelFolder);
-
-    modelFolder.open();
-
     const backendFolder = gui.addFolder('Backend');
 
     showBackendConfigs(backendFolder);
@@ -65,7 +47,7 @@ async function showBackendConfigs(folderController) {
             folderController
                 .__controllers[folderController.__controllers.length - 1]);
     }
-    const backends = params.MODEL_BACKEND_MAP[params.STATE.model];
+    const backends = params.MODEL_BACKEND_MAP[CONST.MODEL];
     // The first element of the array is the default backend for the model.
     params.STATE.backend = backends[0];
     const backendController =
@@ -76,55 +58,6 @@ async function showBackendConfigs(folderController) {
         await showFlagSettings(folderController, backend);
     });
     await showFlagSettings(folderController, params.STATE.backend);
-}
-
-function showModelConfigs(folderController) {
-    // Clean up model configs for the previous model.
-    // The first constroller under the `folderController` is the model
-    // selection.
-    const fixedSelectionCount = 1;
-    while (folderController.__controllers.length > fixedSelectionCount) {
-        folderController.remove(
-            folderController
-                .__controllers[folderController.__controllers.length - 1]);
-    }
-
-    switch (params.STATE.model) {
-        case faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh:
-            addMediaPipeFaceMeshControllers(folderController);
-            break;
-        default:
-            break;
-    }
-}
-
-// The MediaPipeFaceMesh model config folder contains options for
-// MediaPipeFaceMesh config settings.
-function addMediaPipeFaceMeshControllers(modelConfigFolder) {
-    params.STATE.modelConfig = { ...params.MEDIAPIPE_FACE_CONFIG };
-
-    const boundingBoxController =
-        modelConfigFolder.add(params.STATE.modelConfig, 'boundingBox');
-    boundingBoxController.onChange(_ => {
-        params.STATE.isModelChanged = true;
-    });
-
-    const triangulateMeshController =
-        modelConfigFolder.add(params.STATE.modelConfig, 'triangulateMesh');
-    triangulateMeshController.onChange(_ => {
-        params.STATE.isModelChanged = true;
-    });
-
-
-
-    const maxFacesController =
-        modelConfigFolder.add(params.STATE.modelConfig, 'maxFaces', 1, 10)
-            .step(1);
-    maxFacesController.onChange(_ => {
-        // Set isModelChanged to true, so that we don't render any result during
-        // changing models.
-        params.STATE.isModelChanged = true;
-    });
 }
 
 /**
