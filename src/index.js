@@ -113,7 +113,7 @@ async function renderPrediction() {
 };
 
 async function app() {
-    await setupDatGui(urlParams);
+    await setupDatGui();
 
     camera = await Camera.setupCamera();
 

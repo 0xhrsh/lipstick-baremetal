@@ -1,3 +1,5 @@
+import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
+
 export const MAX_FACES = 1;
 export const TARGET_FPS = 30;
 export const BACKEND = 'mediapipe-gpu';

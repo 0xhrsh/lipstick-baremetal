@@ -17,9 +17,9 @@
 import * as params from './shared/params';
 import { setupModelFolder } from './shared/option_panel';
 
-export async function setupDatGui(urlParams) {
+export async function setupDatGui() {
     const gui = new dat.GUI({ width: 300 });
     gui.domElement.id = 'gui';
 
-    return setupModelFolder(gui, urlParams);
+    return setupModelFolder(gui);
 }

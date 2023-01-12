@@ -28,7 +28,7 @@ let TUNABLE_FLAG_DEFAULT_VALUE_MAP;
 
 const stringValueMap = {};
 
-export async function setupModelFolder(gui, urlParams) {
+export async function setupModelFolder(gui) {
     // The model folder contains options for model selection.
     const modelFolder = gui.addFolder('Model');
 
@@ -115,7 +115,7 @@ function addMediaPipeFaceMeshControllers(modelConfigFolder) {
         params.STATE.isModelChanged = true;
     });
 
-    
+
 
     const maxFacesController =
         modelConfigFolder.add(params.STATE.modelConfig, 'maxFaces', 1, 10)
