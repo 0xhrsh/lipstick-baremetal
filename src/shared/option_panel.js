@@ -32,19 +32,7 @@ export async function setupModelFolder(gui, urlParams) {
     // The model folder contains options for model selection.
     const modelFolder = gui.addFolder('Model');
 
-    const model = urlParams.get('model');
-
-    switch (model) {
-        case 'mediapipe_face_mesh':
-            params.STATE.model =
-                faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
-            break;
-        default:
-            const url = new URL(window.location.href);
-            url.searchParams.set('model', 'mediapipe_face_mesh');
-            window.location.href = url;
-            break;
-    }
+    params.STATE.model = faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
 
     const modelController = modelFolder.add(
         params.STATE, 'model',
@@ -127,11 +115,7 @@ function addMediaPipeFaceMeshControllers(modelConfigFolder) {
         params.STATE.isModelChanged = true;
     });
 
-    const refineLandmarksController =
-        modelConfigFolder.add(params.STATE.modelConfig, 'refineLandmarks');
-    refineLandmarksController.onChange(_ => {
-        params.STATE.isModelChanged = true;
-    });
+    
 
     const maxFacesController =
         modelConfigFolder.add(params.STATE.modelConfig, 'maxFaces', 1, 10)

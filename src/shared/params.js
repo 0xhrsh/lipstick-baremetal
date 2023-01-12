@@ -36,7 +36,6 @@ export const STATE = {
 };
 export const MEDIAPIPE_FACE_CONFIG = {
     maxFaces: 1,
-    refineLandmarks: true,
     triangulateMesh: true,
     boundingBox: true,
 };
@@ -57,14 +56,14 @@ export async function createDetector() {
             if (runtime === 'mediapipe') {
                 return faceLandmarksDetection.createDetector(STATE.model, {
                     runtime,
-                    refineLandmarks: STATE.modelConfig.refineLandmarks,
+                    refineLandmarks: true,
                     maxFaces: STATE.modelConfig.maxFaces,
                     solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@${faceMesh.VERSION}`
                 });
             } else if (runtime === 'tfjs') {
                 return faceLandmarksDetection.createDetector(STATE.model, {
                     runtime,
-                    refineLandmarks: STATE.modelConfig.refineLandmarks,
+                    refineLandmarks: true,
                     maxFaces: STATE.modelConfig.maxFaces,
                 });
             }
