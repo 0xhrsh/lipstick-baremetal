@@ -23,7 +23,7 @@ export const GREEN = '#32EEDB';
 export const RED = '#FF2C35';
 export const BLUE = '#157AB3';
 
-export const VIDEO_SIZE = {
+export const VIDEO_SIZES = {
     '640 X 480': { width: 640, height: 480 },
     '640 X 360': { width: 640, height: 360 },
     '360 X 270': { width: 360, height: 270 }

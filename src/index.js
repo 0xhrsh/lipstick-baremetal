@@ -33,12 +33,6 @@ let detector, camera;
 let rafId;
 
 async function checkGuiUpdate() {
-    if (STATE.isTargetFPSChanged || STATE.isSizeOptionChanged) {
-        camera = await Camera.setupCamera(STATE.camera);
-        STATE.isTargetFPSChanged = false;
-        STATE.isSizeOptionChanged = false;
-    }
-
     if (STATE.isModelChanged || STATE.isFlagChanged || STATE.isBackendChanged) {
         STATE.isModelChanged = true;
 
@@ -119,12 +113,9 @@ async function renderPrediction() {
 };
 
 async function app() {
-    // Gui content will change depending on which model is in the query string.
-    const urlParams = new URLSearchParams(window.location.search);
-
     await setupDatGui(urlParams);
 
-    camera = await Camera.setupCamera(STATE.camera);
+    camera = await Camera.setupCamera();
 
     await setBackendAndEnvFlags(STATE.flags, STATE.backend);
 
