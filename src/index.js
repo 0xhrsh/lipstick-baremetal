@@ -96,9 +96,7 @@ async function renderResult() {
     // different model. If during model change, the result is from an old model,
     // which shouldn't be rendered.
     if (faces && faces.length > 0 && !STATE.isModelChanged) {
-        camera.drawResults(
-            faces, STATE.modelConfig.triangulateMesh,
-            STATE.modelConfig.boundingBox);
+        camera.drawResults(faces);
     }
 }
 

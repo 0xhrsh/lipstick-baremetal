@@ -14,9 +14,9 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
 import * as tf from '@tensorflow/tfjs-core';
 import * as params from './params';
+import * as CONST from '../const';
 
 import { TUNABLE_FLAG_VALUE_RANGE_MAP } from './params';
 
@@ -130,7 +130,7 @@ function darkenRGBPercentage(rgb, percentage) {
  * @param triangulateMesh Whether or not to display the triangle mesh.
  * @param boundingBox Whether or not to display the bounding box.
  */
-export function drawResults(ctx, faces, triangulateMesh, boundingBox) {
+export function drawResults(ctx, faces) {
     var rgb = params.LIPSTICK_COLORS[params.STATE.color];
     const [r, g, b] = darkenRGBPercentage(rgb, 0)
     drawLipstick(ctx, faces, `rgba(${r}, ${g}, ${b}, 0.25)`);
@@ -163,7 +163,7 @@ export function drawLipstick(ctx, faces, colour) {
             index = lowerLipPath[i];
             ctx.lineTo(keypoints[index][0], keypoints[index][1]);
         }
-        ctx.filter = 'blur(1px)';
+        ctx.filter = `blur(${CONST.BLUR}px)`;
         ctx.fill();
     }
 }
