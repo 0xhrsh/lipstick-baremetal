@@ -6,3 +6,4 @@ export const BACKEND = 'mediapipe-gpu';
 export const MODEL = faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
 export const VIDEO_SIZE = '640 X 480';
 export const BLUR = 1;
+export const Offset = 1.2;
