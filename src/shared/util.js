@@ -139,6 +139,16 @@ export function drawResults(ctx, faces) {
 const upperLipPath = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 306, 292, 308, 415, 310, 311, 312, 13, 82, 81, 80, 191, 78, 62, 76, 61];
 const lowerLipPath = [61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291, 306, 292, 308, 324, 318, 402, 317, 14, 87, 178, 88, 95, 78, 62, 76, 61];
 
+function drawFilledLip(ctx, points, indices) {
+    ctx.beginPath();
+    var index = indices[0];
+    ctx.moveTo(points[index][0], points[index][1]);
+    for (let i = 1; i < indices.length; i++) {
+        index = indices[i];
+        ctx.lineTo(points[index][0], points[index][1]);
+    }
+    ctx.fill();
+}
 
 export function drawLipstick(ctx, faces, colour) {
     for (let fi = 0; fi < faces.length; fi++) {
@@ -147,23 +157,9 @@ export function drawLipstick(ctx, faces, colour) {
         ctx.fillStyle = colour;
 
         const keypoints = face.keypoints.map((keypoint) => [keypoint.x, keypoint.y]);
-        ctx.beginPath();
-        var index = upperLipPath[0];
-        ctx.moveTo(keypoints[index][0], keypoints[index][1]);
-        for (let i = 1; i < upperLipPath.length; i++) {
-            index = upperLipPath[i];
-            ctx.lineTo(keypoints[index][0], keypoints[index][1]);
-        }
-        ctx.fill();
+        drawFilledLip(ctx, keypoints, upperLipPath);
+        drawFilledLip(ctx, keypoints, lowerLipPath);
 
-        ctx.beginPath();
-        var index = lowerLipPath[0];
-        ctx.moveTo(keypoints[index][0], keypoints[index][1]);
-        for (let i = 1; i < lowerLipPath.length; i++) {
-            index = lowerLipPath[i];
-            ctx.lineTo(keypoints[index][0], keypoints[index][1]);
-        }
         ctx.filter = `blur(${CONST.BLUR}px)`;
-        ctx.fill();
     }
 }
