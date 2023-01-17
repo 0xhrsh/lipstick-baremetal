@@ -145,7 +145,9 @@ function calculateLipOffset(keypoints, lipPath) {
     var offset = 0.0;
     for (let i = 0; i < lipPath.length; i++) {
         var index = lipPath[i];
-        offset += Math.abs((keypoints[index][0] + keypoints[index][1] - oldKeyPoints[index][0] - oldKeyPoints[index][1]) / 2);
+        var dx = keypoints[index][0] - oldKeyPoints[index][0];
+        var dy = keypoints[index][1] - oldKeyPoints[index][1];
+        offset += Math.sqrt(dx * dx + dy * dy);
     }
     offset /= lipPath.length;
     return offset;
@@ -179,10 +181,9 @@ export function drawLipstick(ctx, faces, colour) {
             upperLipOffset = calculateLipOffset(keypoints, upperLipPath);
             lowerLipOffset = calculateLipOffset(keypoints, lowerLipPath);
         }
-        var offset = Math.max(upperLipOffset, lowerLipOffset);
+        var offset = (upperLipOffset + lowerLipOffset) / 2;
 
-        console.log(offset);
-        if (offset > CONST.Offset) {
+        if (offset > CONST.MAX_ALLOWED_OFFSET) {
             drawFilledLip(ctx, keypoints, upperLipPath);
             drawFilledLip(ctx, keypoints, lowerLipPath);
             oldKeyPoints = keypoints;
