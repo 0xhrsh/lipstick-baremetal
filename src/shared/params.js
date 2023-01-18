@@ -19,11 +19,6 @@ import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detec
 import * as CONST from '../const';
 
 
-export const VIDEO_SIZES = {
-    '640 X 480': { width: 640, height: 480 },
-    '640 X 360': { width: 640, height: 360 },
-    '360 X 270': { width: 360, height: 270 }
-};
 export const STATE = {
     color: ''
 };

@@ -15,9 +15,8 @@
  * =============================================================================
  */
 
-import { VIDEO_SIZES } from './shared/params';
 import { drawResults, isMobile } from './shared/util';
-import { TARGET_FPS, VIDEO_SIZE } from './const';
+import * as CONST from './const';
 
 export class Camera {
     constructor() {
@@ -36,17 +35,16 @@ export class Camera {
                 'Browser API navigator.mediaDevices.getUserMedia not available');
         }
 
-        const $size = VIDEO_SIZES[VIDEO_SIZE];
         const videoConfig = {
             'audio': false,
             'video': {
                 facingMode: 'user',
                 // Only setting the video to a specified size for large screen, on
                 // mobile devices accept the default size.
-                width: isMobile() ? VIDEO_SIZES['360 X 270'].width : $size.width,
-                height: isMobile() ? VIDEO_SIZES['360 X 270'].height : $size.height,
+                width: isMobile() ? CONST.MOBILE_VIDEO_SIZE.width : CONST.VIDEO_SIZE.width,
+                height: isMobile() ? CONST.MOBILE_VIDEO_SIZE.height : CONST.VIDEO_SIZE.height,
                 frameRate: {
-                    ideal: TARGET_FPS,
+                    ideal: CONST.TARGET_FPS,
                 },
             },
         };
