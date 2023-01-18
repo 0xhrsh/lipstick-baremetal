@@ -7,9 +7,9 @@ export const MODEL = faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
 
 export const VIDEO_SIZE = { width: 640, height: 480 };
 export const MOBILE_VIDEO_SIZE = { width: 360, height: 270 };
-export const TARGET_FPS = 30;
+export const TARGET_FPS = 20;
 
-export const MAX_ALLOWED_OFFSET = 1.5;
+export const MAX_ALLOWED_OFFSET = 1.7;
 export const BLUR = 1;
 
 export const LIPSTICK_COLORS = {
