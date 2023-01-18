@@ -26,8 +26,8 @@ import '@tensorflow-models/face-detection';
 
 import { Camera } from './camera';
 import { setupDatGui } from './option_panel';
-import { STATE, createDetector } from './shared/params';
-import { setBackendAndEnvFlags } from './shared/util';
+import { STATE, createDetector } from './params';
+import { setBackendAndEnvFlags } from './util';
 
 let detector, camera;
 let rafId;

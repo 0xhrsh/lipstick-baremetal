@@ -15,7 +15,7 @@
  * =============================================================================
  */
 
-import { drawResults, isMobile } from './shared/util';
+import { drawResults, isMobile } from './util';
 import * as CONST from './const';
 
 export class Camera {

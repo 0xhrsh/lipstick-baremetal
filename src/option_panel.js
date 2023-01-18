@@ -14,7 +14,7 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as params from './shared/params';
+import * as params from './params';
 import * as CONST from './const';
 
 export async function setupDatGui() {
