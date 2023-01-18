@@ -23,11 +23,6 @@ export const STATE = {
     color: ''
 };
 
-export const LIPSTICK_COLORS = {
-    'Sinful Cherry': [170, 0, 52],
-    'Delicious Plum': [127, 2, 75]
-}
-
 export async function createDetector() {
     switch (CONST.MODEL) {
         case faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh:

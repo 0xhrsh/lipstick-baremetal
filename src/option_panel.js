@@ -15,6 +15,7 @@
  * =============================================================================
  */
 import * as params from './shared/params';
+import * as CONST from './const';
 
 export async function setupDatGui() {
     const gui = new dat.GUI({ width: 300 });
@@ -28,7 +29,7 @@ export async function setupDatGui() {
             lipstick
                 .__controllers[lipstick.__controllers.length - 1]);
     }
-    const colors = Object.keys(params.LIPSTICK_COLORS);
+    const colors = Object.keys(CONST.LIPSTICK_COLORS);
     params.STATE.color = colors[0];
     const colorController =
         lipstick.add(params.STATE, 'color', colors);

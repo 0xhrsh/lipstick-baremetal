@@ -95,7 +95,7 @@ function darkenRGBPercentage(rgb, percentage) {
  * @param boundingBox Whether or not to display the bounding box.
  */
 export function drawResults(ctx, faces) {
-    var rgb = params.LIPSTICK_COLORS[params.STATE.color];
+    var rgb = CONST.LIPSTICK_COLORS[params.STATE.color];
     const [r, g, b] = darkenRGBPercentage(rgb, 0)
     drawLipstick(ctx, faces, `rgba(${r}, ${g}, ${b}, 0.25)`);
 }
