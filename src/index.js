@@ -32,32 +32,6 @@ import { setBackendAndEnvFlags } from './shared/util';
 let detector, camera;
 let rafId;
 
-async function checkGuiUpdate() {
-    if (STATE.isModelChanged || STATE.isFlagChanged || STATE.isBackendChanged) {
-        STATE.isModelChanged = true;
-
-        window.cancelAnimationFrame(rafId);
-
-        if (detector != null) {
-            detector.dispose();
-        }
-
-        if (STATE.isFlagChanged || STATE.isBackendChanged) {
-            await setBackendAndEnvFlags(STATE.flags, STATE.backend);
-        }
-
-        try {
-            detector = await createDetector(STATE.model);
-        } catch (error) {
-            detector = null;
-            alert(error);
-        }
-
-        STATE.isFlagChanged = false;
-        STATE.isBackendChanged = false;
-        STATE.isModelChanged = false;
-    }
-}
 
 async function renderResult() {
     if (camera.video.readyState < 2) {
@@ -101,8 +75,6 @@ async function renderResult() {
 }
 
 async function renderPrediction() {
-    await checkGuiUpdate();
-
     if (!STATE.isModelChanged) {
         await renderResult();
     }

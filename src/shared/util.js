@@ -18,8 +18,6 @@ import * as tf from '@tensorflow/tfjs-core';
 import * as params from './params';
 import * as CONST from '../const';
 
-import { TUNABLE_FLAG_VALUE_RANGE_MAP } from './params';
-
 export function isiOS() {
     return /iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
@@ -77,45 +75,11 @@ export async function setBackendAndEnvFlags(flagConfig, backend) {
         throw new Error(
             `An object is expected, while a(n) ${typeof flagConfig} is found.`);
     }
-
-    // Check the validation of flags and values.
-    for (const flag in flagConfig) {
-        // TODO: check whether flag can be set as flagConfig[flag].
-        if (!(flag in TUNABLE_FLAG_VALUE_RANGE_MAP)) {
-            throw new Error(`${flag} is not a tunable or valid environment flag.`);
-        }
-        if (TUNABLE_FLAG_VALUE_RANGE_MAP[flag].indexOf(flagConfig[flag]) === -1) {
-            throw new Error(
-                `${flag} value is expected to be in the range [${TUNABLE_FLAG_VALUE_RANGE_MAP[flag]}], while ${flagConfig[flag]}` +
-                ' is found.');
-        }
-    }
-
-    tf.env().setFlags(flagConfig);
-
     const [runtime, $backend] = backend.split('-');
 
     if (runtime === 'tfjs') {
         await resetBackend($backend);
     }
-}
-
-function distance(a, b) {
-    return Math.sqrt(Math.pow(a[0] - b[0], 2) + Math.pow(a[1] - b[1], 2));
-}
-
-function drawPath(ctx, points, closePath) {
-    const region = new Path2D();
-    region.moveTo(points[0][0], points[0][1]);
-    for (let i = 1; i < points.length; i++) {
-        const point = points[i];
-        region.lineTo(point[0], point[1]);
-    }
-
-    if (closePath) {
-        region.closePath();
-    }
-    ctx.stroke(region);
 }
 
 function darkenRGBPercentage(rgb, percentage) {
