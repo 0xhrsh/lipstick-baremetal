@@ -5,7 +5,7 @@ export const MAX_FACES = 1;
 export const BACKEND = 'mediapipe-gpu';
 export const MODEL = faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
 
-export const VIDEO_SIZE = { width: 640, height: 480 };
+export const VIDEO_SIZE = { width: 1920, height: 1080 };
 export const MOBILE_VIDEO_SIZE = { width: 360, height: 270 };
 export const TARGET_FPS = 20;
 
