@@ -17,6 +17,7 @@
 import * as tf from '@tensorflow/tfjs-core';
 import * as params from './params';
 import * as CONST from './const';
+import * as EXTENSION from './extension'
 
 export function isiOS() {
     return /iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -120,10 +121,22 @@ function calculateLipOffset(keypoints, lipPath) {
 function drawFilledLip(ctx, points, lipPath) {
     ctx.beginPath();
     var index = lipPath[0];
+    var eIndex;
+
     ctx.moveTo(points[index][0], points[index][1]);
-    for (let i = 1; i < lipPath.length; i++) {
+
+    for (let i = 0; i < lipPath.length; i++) {
         index = lipPath[i];
-        ctx.lineTo(points[index][0], points[index][1]);
+        if (EXTENSION.extendedPoints[index.toString()] === undefined) {
+            eIndex = index;
+        } else {
+            eIndex = EXTENSION.extendedPoints[index.toString()];
+        }
+
+        var pa = points[index];
+        var pb = points[eIndex];
+
+        ctx.lineTo(pa[0] * (1 - CONST.EXTENSION_DELTA) + pb[0] * CONST.EXTENSION_DELTA, pa[1] * (1 - CONST.EXTENSION_DELTA) + pb[1] * CONST.EXTENSION_DELTA);
     }
     ctx.fill();
 }
