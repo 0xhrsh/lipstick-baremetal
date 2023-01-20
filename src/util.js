@@ -98,7 +98,7 @@ function darkenRGBPercentage(rgb, percentage) {
 export function drawResults(ctx, faces) {
     var rgb = CONST.LIPSTICK_COLORS[params.STATE.color];
     const [r, g, b] = darkenRGBPercentage(rgb, 0)
-    drawLipstick(ctx, faces, `rgba(${r}, ${g}, ${b}, ${CONST.LIPSTICK_TRANSPARENCY})`);
+    drawLipstick(ctx, faces, `rgba(${r}, ${g}, ${b}, ${CONST.LIPSTICK_ALPHA})`);
 }
 
 const upperLipPath = [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 306, 292, 308, 415, 310, 311, 312, 13, 82, 81, 80, 191, 78, 62, 76, 61];
@@ -138,6 +138,7 @@ function drawFilledLip(ctx, points, lipPath) {
 
         ctx.lineTo(pa[0] * (1 - CONST.EXTENSION_DELTA) + pb[0] * CONST.EXTENSION_DELTA, pa[1] * (1 - CONST.EXTENSION_DELTA) + pb[1] * CONST.EXTENSION_DELTA);
     }
+    ctx.filter = `blur(${CONST.BLUR}px)`;
     ctx.fill();
 }
 
@@ -168,7 +169,6 @@ export function drawLipstick(ctx, faces, colour) {
             drawFilledLip(ctx, oldKeyPoints, upperLipPath);
             drawFilledLip(ctx, oldKeyPoints, lowerLipPath);
         }
-
-        ctx.filter = `blur(${CONST.BLUR}px)`;
+        ctx.filter = 'none';
     }
 }
