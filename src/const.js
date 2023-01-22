@@ -17,4 +17,4 @@ export const LIPSTICK_COLORS = {
     'Sinful Cherry': [170, 0, 52],
     'Delicious Plum': [127, 2, 75]
 }
-export const EXTENSION_DELTA = 0.25;
+export const EXTENSION_DELTA = 0.17;
