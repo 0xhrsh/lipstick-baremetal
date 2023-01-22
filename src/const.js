@@ -10,11 +10,12 @@ export const MOBILE_VIDEO_SIZE = { width: 360, height: 270 };
 export const TARGET_FPS = 15;
 
 export const MAX_ALLOWED_OFFSET = 2.7;
-export const BLUR = 2;
+export const BLUR = 2.2;
 
 export const LIPSTICK_ALPHA = 0.25; // transparency of lipstick
 export const LIPSTICK_COLORS = {
     'Sinful Cherry': [170, 0, 52],
-    'Delicious Plum': [127, 2, 75]
+    'Delicious Plum': [127, 2, 75],
+    'A Powerful Sunny Red': [170, 41, 35]
 }
 export const EXTENSION_DELTA = 0.17;
